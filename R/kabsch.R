@@ -10,6 +10,7 @@
 #' ordering, i.e. point one of the second matrix is mapped to point one of
 #' the reference matrix, point two of the second matrix is mapped to point two 
 #' of the reference matrix, and so on.
+#' From https://gist.github.com/jlmelville/9b4e5d076e719a7541881e8cbf58a895
 #'   
 #' @param pm n x d matrix of reference points.
 #' @param qm n x d matrix of points to align to to \code{pm}
