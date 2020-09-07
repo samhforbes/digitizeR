@@ -22,9 +22,12 @@ devtools::install_github("samhforbes/digitizeR")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+A csv of participants’ cap and head sizes is required, where the first
+column is ID, second is head size, and third is cap size. If you don’t
+wish to separate by cap size then a single number can be input for cap
+size.
 
-``` r
-library(digitizeR)
-## basic example code
-```
+Note that the output of polhemus digitizations is assumed to be a txt
+file with sources first, followed by detectors. Numbers are taken in cm
+rather than inches, and as part of this package converted into mm for
+use with Homer2.
