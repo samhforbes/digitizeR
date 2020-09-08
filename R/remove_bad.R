@@ -1,3 +1,35 @@
+#' Find the best cap to align to
+#'
+#' This is a helpful step to make the templates which allows visualisation of whether a sensible choice has been made by the algorithm.
+#'
+#' @param aligned_caps the nested list from count_nested_aligned_caps
+#' @return A list of best candidates in each cap size
+#' @export
+
+find_greatest_alignment <- function(aligned_caps){
+  dd <- aligned_caps
+  dd2 <- lapply(dd, function(x) which.max(lengths(x)))
+  return(dd2)
+}
+
+#' See the number of caps that align with the best candidate
+#'
+#' This function gets used to check that the best candidate is aligning to enough other caps to be an acceptable choice. If it is too low, the distance should be increased above.
+#'
+#' @param aligned_caps the nested list from count_nested_aligned_caps
+#' @return The number of caps the best candidate aligns with in each cap size
+#' @export
+
+greatest_alignment <- function(aligned_caps){
+  dd <- aligned_caps
+  dd2 <- lapply(dd, function(x) max(lengths(x)))
+  return(dd2)
+}
+
+
+
+
+
 remove_bad <- function(original, cleaned){
   for(i in 1:length(cleaned)){
     removed <- which(is.na(match(names(original[[i]]), names(cleaned[[i]]))))
@@ -38,14 +70,14 @@ remove_outside_distance <- function(data, templates, max){
 
 count_aligned_caps <- function(data, max){
   distances <- data
-  
+
   for(i in 1:length(distances)){
     for(j in 1:length(distances[[i]])){
       sublist <- list()
       for(k in 1:length(distances[[i]])){
-        
+
         sublist[[k]] <- calc_3d_dist(data[[i]][[j]], data[[i]][[k]])
-        
+
       }
       distances[[i]][[j]] <- sublist
     }
@@ -54,14 +86,14 @@ count_aligned_caps <- function(data, max){
   for(i in 1:length(fulldist)){
     for(j in 1:length(fulldist[[i]])){
       for(k in 1:length(fulldist[[i]][[j]])){
-      
+
           if(any(fulldist[[i]][[j]][[k]] > max)){
             fulldist[[i]][[j]][[k]] <- NA
           }
       }
     }
   }
-  
+
   new_distance <- fulldist
   for(i in 1:length(new_distance)){
     for(j in 1:length(new_distance[[i]])){
@@ -69,31 +101,6 @@ count_aligned_caps <- function(data, max){
     }
   }
   return(new_distance)
-}
-
-find_greatest_alignment <- function(aligned_caps){
-  dd <- aligned_caps
-  dd2 <- lapply(dd, function(x) which.max(lengths(x)))
-  return(dd2)
-}
-
-greatest_alignment <- function(aligned_caps){
-  dd <- aligned_caps
-  dd2 <- lapply(dd, function(x) max(lengths(x)))
-  return(dd2)
-}
-
-select_caps_by_npoints <- function(data, npoints){
-  correct <- data
-  for(i in 1:length(correct)){
-    for(j in 1:length(correct[[i]])){
-      if(nrow(correct[[i]][[j]]) != npoints){
-        correct[[i]][[j]] <- NA
-      }
-    }
-    correct[[i]] <- correct[[i]][!is.na(correct[[i]])]
-  }
-  return(correct)
 }
 
 select_nested_caps_by_npoints <- function(data, npoints){
@@ -111,51 +118,7 @@ select_nested_caps_by_npoints <- function(data, npoints){
   return(correct)
 }
 
-count_nested_aligned_caps <- function(nested_data, original_data, max, points){
-  distances <- nested_data
-  
-  cut_data <- lapply(original_data, function(x) 
-    lapply(x, function(y) select(y, one_of(c('V2', 'V3', 'V4')))))
-  
-  cut_data <- select_caps_by_npoints(original_data, points)
-  
-  for(i in 1:length(cut_data)){
-    for(j in 1:length(cut_data[[i]])){
-        sublist <- list(list())
-      for(l in 1:length(distances[[i]][[j]])){
-        
-        sublist[[l]] <- calc_3d_dist(distances[[i]][[j]][[j]], distances[[i]][[j]][[l]])
-        
-      }
-        distances[[i]][[j]] <- sublist
-        names(distances[[i]][[j]]) <- names(distances[[i]])
-    }
-  }
-  
-  fulldist <- distances
-  for(i in 1:length(fulldist)){
-    for(j in 1:length(fulldist[[i]])){
-      for(k in 1:length(fulldist[[i]][[j]])){
-       # for(l in 1:length(fulldist[[i]][[j]][[k]])){
-        
-          if(any(fulldist[[i]][[j]][[k]] > max)){
-          fulldist[[i]][[j]][[k]] <- NA
-       #   }
-        }
-      }
-    }
-  }
-  
-  new_distance <- fulldist
-  for(i in 1:length(new_distance)){
-    for(j in 1:length(new_distance[[i]])){
-     # for(k in 1:length(new_distance[[i]][[j]])){
-        new_distance[[i]][[j]] <- names(which(!is.na(new_distance[[i]][[j]])))
-    #  }
-    }
-  }
-  return(new_distance)
-}
+
 
 select_caps_without_npoints <- function(data, npoints){
   correct <- data
@@ -178,7 +141,7 @@ adjust_points <- function(data, npoints){
       if(nrow(correct[[i]][[j]]) > npoints){
         correct[[i]][[j]] <- correct[[i]][[j]][1:npoints,]
         }
-      
+
       if(nrow(correct[[i]][[j]]) < npoints){
         p = nrow(correct[[i]][[j]])
         q = npoints - p
@@ -200,7 +163,7 @@ adjust_points2 <- function(data, npoints){
       if(nrow(correct[[i]][[j]]) > npoints){
         correct[[i]][[j]] <- correct[[i]][[j]][1:npoints,]
       }
-      
+
       if(nrow(correct[[i]][[j]]) < npoints){
         p = nrow(correct[[i]][[j]])
         q = npoints - p
