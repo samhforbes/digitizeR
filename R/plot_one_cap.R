@@ -1,90 +1,92 @@
-plot_one_cap <- function(data, index){
-  #index refers to the index of that cap in the list
-  a <- data[[index]]
-  
-  a <- lapply(a, function(x) x[1:5,])
-  n <- c('x', 'y', 'z')
-  a <- lapply(a, setNames, n)
-  
-  v <- c('nz', 'ar', 'al', 'cz', 'iz')
-  a <- lapply(a, function(x) cbind(x,v))
-  
-  a <- unname(a)
-  a <- lapply(a, function(x)
-    lapply(x, function(y) unname(y)))
-  #last one fails
- # a[length(a)] <- NULL
-  
-  
-  
-  a <- do.call(rbind.data.frame, a)
-  a$v <- as.character(a$v)
-  
-  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~v) %>%
-    add_markers()
-  
-  plot
-}
+#' Plot the cap of a single participant
+#'
+#' @details This is done by numbers, so you choose to plot eg fro the second cap size the fourth participant.
+#'
+#' @param data the dataset from which to plot
+#' @param index an integer indicating the ordinal capsize list you wish to choose from
+#' @param part an integer indicating the ordinal participant number you wish to choose in that cap size
+#' @param flipped logical indicating whether the cap should be flipped on the z axis for visualisation
+#' @return a 3d plot of the points of one cap
+#' @export
 
-plot_template <- function(data, index){
-  a <- data[[index]]
-  
-  a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')
-  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~Points, colors = 'Set1') %>%
-    add_markers()
-  
-  plot
-}
-
-plot_one_participant <- function(data, index, part){
+plot_one_participant <- function(data, index, part, flipped = T){
   #index refers to the index of that cap in the list
   a <- data[[index]][[part]]
-  
+
   if(ncol(a) >3 ){
-  names(a)[c(2,3,4)] <- c('x', 'y', 'z')
+    names(a)[c(2,3,4)] <- c('x', 'y', 'z')
   }
-  
+
+  if(flipped == T){
+    a <- a %>%
+      mutate(z = -z)
+  }
+
   a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')
-  
+
   plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~Points, colors = 'Set1') %>%
     add_markers()
-  
+
   plot
 }
 
-plot_one <- function(data, index){
-  #index refers to the index of that cap in the list
-  a <- data[[index]]
-  
-  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z) %>%
-    add_markers()
-  
-  plot
-}
+#' Plot to see the alignment of landmarks for each cap size
+#'
+#' This is a way to check that all capsize lists are roughly in the same space
+#'
+#' @param template_index the results of find_greatest_alignment
+#' @param nested_data the resutls of align_all_caps_nested
+#'
+#' @return a plot of the landmarks for each cap size
+#' @export
 
-plot_templates_by_index <- function(template_index, data){
+plot_visual_alignment <- function(template_index, nested_data){
+  #used to be plot_template_by_index
   new_data <- list()
   for(i in 1:length(template_index)){
     a <-as.numeric(template_index[[i]])
     new_data[[i]] <- data[[i]][[a]][[a]]
   }
-  
-  
+
+
   plotting_data <- new_data
   #n <- names(new_data)
   #for(i in 1:length(plotting_data)){
   #  plotting_data[[i]]$cap <- n[i]
   #}
   n <- c('x', 'y', 'z')
-  
+
   plotting_data <- lapply(plotting_data, function(x) x[1:5,])
   v <- c('nz', 'ar', 'al', 'cz', 'iz')
   plotting_data <- lapply(plotting_data, function(x) cbind(x,v))
-  
+
   true_data <- do.call(rbind, plotting_data)
   names(true_data)[c(1:3)] <- n
-  
+
   plot <- plot_ly(data = true_data, x = ~x, y = ~y, z= ~z, color = ~v) %>%
     add_markers()
   plot
 }
+
+
+plot_template <- function(data, index){
+  a <- data[[index]]
+
+  a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')
+  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~Points, colors = 'Set1') %>%
+    add_markers()
+
+  plot
+}
+
+plot_one <- function(data, index){
+  #index refers to the index of that cap in the list
+  a <- data[[index]]
+
+  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z) %>%
+    add_markers()
+
+  plot
+}
+
+
