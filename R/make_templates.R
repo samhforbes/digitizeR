@@ -22,6 +22,17 @@ make_partial_templates <- function(template_index, data){
   return(new_templates)
 }
 
+#' Make final or full templates after the partial templates
+#'
+#' The expectation is that this is used after making partial templates and aligning to them. This then takes the output of those functions
+#'
+#' @param data the dataset. In normal circumstances should be the output of align_to_template to the partial template.
+#' @param template_index Output of find_greatest_alignment
+#' @param distances Output of count_nested_aligned_caps
+#' @param length The number of points that exist in the cap
+#' @return a template in each cap size
+#' @export
+
 make_full_templates <- function(data, template_index, distances, length){
 
 #  data <- lapply(data, function(x)
