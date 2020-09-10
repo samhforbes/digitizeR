@@ -68,9 +68,17 @@ plot_visual_alignment <- function(template_index, nested_data){
   plot
 }
 
+#' Plot a template from the template dataset to see how they look
+#'
+#' This is a way to plot all the points in a template to see the spread of digipoints.
+#'
+#' @param template the tamplate dataset
+#' @param index the numerical index of which cap size to choose
+#' @return a full plot
+#' @export
 
-plot_template <- function(data, index){
-  a <- data[[index]]
+plot_template <- function(template, index){
+  a <- template[[index]]
 
   a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')
   plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~Points, colors = 'Set1') %>%
@@ -79,14 +87,14 @@ plot_template <- function(data, index){
   plot
 }
 
-plot_one <- function(data, index){
-  #index refers to the index of that cap in the list
-  a <- data[[index]]
-
-  plot <- plot_ly(a, x = ~x, y = ~y, z = ~z) %>%
-    add_markers()
-
-  plot
-}
+# plot_one <- function(data, index){
+#   #index refers to the index of that cap in the list
+#   a <- data[[index]]
+#
+#   plot <- plot_ly(a, x = ~x, y = ~y, z = ~z) %>%
+#     add_markers()
+#
+#   plot
+# }
 
 
