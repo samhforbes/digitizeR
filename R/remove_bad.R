@@ -118,21 +118,6 @@ select_nested_caps_by_npoints <- function(data, npoints){
   return(correct)
 }
 
-
-
-select_caps_without_npoints <- function(data, npoints){
-  correct <- data
-  for(i in 1:length(correct)){
-    for(j in 1:length(correct[[i]])){
-      if(nrow(correct[[i]][[j]]) == npoints){
-        correct[[i]][[j]] <- NA
-      }
-    }
-    correct[[i]] <- correct[[i]][!is.na(correct[[i]])]
-  }
-  return(correct)
-}
-
 adjust_points <- function(data, npoints){
   correct <- data
   for(i in 1:length(correct)){

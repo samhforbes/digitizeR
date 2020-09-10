@@ -19,6 +19,27 @@ select_caps_by_npoints <- function(data, npoints){
   return(correct)
 }
 
+#' select only the caps without a number of points
+#'
+#' this is useful on the occasions when you want to detail with caps that are obviously wrong because they miss a number of points.
+#' @param data the overall dataset to pull from
+#' @param npoints the number of points you want the data to NOT have
+#' @return the subset of data that misses points
+#' @export
+
+select_caps_without_npoints <- function(data, npoints){
+  correct <- data
+  for(i in 1:length(correct)){
+    for(j in 1:length(correct[[i]])){
+      if(nrow(correct[[i]][[j]]) == npoints){
+        correct[[i]][[j]] <- NA
+      }
+    }
+    correct[[i]] <- correct[[i]][!is.na(correct[[i]])]
+  }
+  return(correct)
+}
+
 #' Align all nested caps to all other caps in a cap size
 #'
 #' @details use the modified kabsch to align every cap to every other cap in a certain size.
