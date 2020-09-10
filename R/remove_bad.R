@@ -26,8 +26,35 @@ greatest_alignment <- function(aligned_caps){
   return(dd2)
 }
 
+#' Adjust the points so they have the right number
+#'
+#' This is just necessary to take bad templates further along the pipeline.
+#' @param data the dataset to adjust
+#' @param npoints The correct number of points it should have, but currently doesn't
+#' @return A set of caps with the correct number of points (although some points will be bad)
+#' @export
 
+adjust_points <- function(data, npoints){
+  correct <- data
+  for(i in 1:length(correct)){
+    if(length(correct[[i]]) == 0) next
+    for(j in 1:length(correct[[i]])){
+      if(nrow(correct[[i]][[j]]) > npoints){
+        correct[[i]][[j]] <- correct[[i]][[j]][1:npoints,]
+      }
 
+      if(nrow(correct[[i]][[j]]) < npoints){
+        p = nrow(correct[[i]][[j]])
+        q = npoints - p
+        for(t in 1:q){
+          s = p + t
+          correct[[i]][[j]][s,] <- correct[[i]][[j]][p,]
+        }
+      }
+    }
+  }
+  return(correct)
+}
 
 
 remove_bad <- function(original, cleaned){
@@ -113,28 +140,6 @@ select_nested_caps_by_npoints <- function(data, npoints){
         }
       }
       correct[[i]][[j]] <- correct[[i]][[j]][!is.na(correct[[i]][[j]])]
-    }
-  }
-  return(correct)
-}
-
-adjust_points <- function(data, npoints){
-  correct <- data
-  for(i in 1:length(correct)){
-    if(length(correct[[i]]) == 0) next
-    for(j in 1:length(correct[[i]])){
-      if(nrow(correct[[i]][[j]]) > npoints){
-        correct[[i]][[j]] <- correct[[i]][[j]][1:npoints,]
-        }
-
-      if(nrow(correct[[i]][[j]]) < npoints){
-        p = nrow(correct[[i]][[j]])
-        q = npoints - p
-        for(t in 1:q){
-          s = p + t
-          correct[[i]][[j]][s,] <- correct[[i]][[j]][p,]
-        }
-      }
     }
   }
   return(correct)
