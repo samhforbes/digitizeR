@@ -26,6 +26,16 @@ modified_kabsch <- function(pm, qm, om) {
   sweep(t(tcrossprod(um, om)), 2, -attr(pm, "scaled:center"))
 }
 
+#' Align a dataset to the template for each cap size
+#'
+#' This is done only for a full set of alignments, in other occasions you can use align_to_template2
+#'
+#' @param template The template dataset
+#' @param data the data output of select_caps_by_npoints
+#' @param num_aligned the number of points to use in the alignment
+#'
+#' @return the listed dataset aligned to the template in each cap size
+#' @export
 
 align_to_template <- function(template, data, num_aligned){
   if(ncol(data[[1]][[2]]) > 3){
