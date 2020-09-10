@@ -77,3 +77,33 @@ make_full_templates <- function(data, template_index, distances, length){
   }
   return(data_list2)
 }
+
+#' Rezero template
+#'
+#' This is a helper function to allow bringing the z value of the cz point back to zero so you are largely in the same space. It also sanity checks for outlier points.
+#'
+#' @param template The template dataset (usually the output of make_full_templates)
+#' @return Slightly cleaned up version of templates
+#' @export
+
+rezero_template <- function(template){
+  data <- template
+  if(length(data) == 0) next
+  for(i in 1:length(data)){
+    data[[i]]$z <- data[[i]]$z - data[[i]]$z[4]
+
+    #inbuilt sanity check
+    for(j in 1:nrow(data[[i]])){
+      if(data[[i]]$y[j] > (data[[i]]$y[2] + 1.5)){
+        data[[i]]$y[j] <- (data[[i]]$y[2] + 1.5)
+      }
+      if(data[[i]]$y[j] < (data[[i]]$y[3] - 1.5)){
+        data[[i]]$y[j] <- (data[[i]]$y[3] - 1.5)
+      }
+      if(data[[i]]$x[j] < (data[[i]]$x[5] - 1)){
+        data[[i]]$x[j] <- (data[[i]]$x[5] - 1)
+      }
+    }
+  }
+  return(data)
+}
