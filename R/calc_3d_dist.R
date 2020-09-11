@@ -198,7 +198,17 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
   return(fulldist)
 }
 
-#like the pointwise replacement in calc_dist_replace_template, but for overall caps
+#' Headwise replacement
+#'
+#' replaces by a whole cap rather than individual points.
+#' When the average distance for the cap goes beyond the max value, the whole cap is replaced
+#'
+#' @param template the template dataset
+#' @param data the dataset to replace
+#' @param max the maximum distance to accept
+#'
+#' @return The dataset with caps replaced with template caps when poor
+#' @export
 headwise_replacement <- function(template, data, max){
   fulldist <- data
   for(i in 1:length(fulldist)){
