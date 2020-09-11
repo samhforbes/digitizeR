@@ -104,8 +104,16 @@ calc_dist_and_replace_na <- function(template, aligned_data, original_data, max)
   return(corrected)
 }
 
-replace_nas_with_template <- function(template, data){
+#' replace NAs with template
+#'
+#' A simple replacement function for NAs
+#' @param template template data
+#' @param data the cap dataset
+#'
+#' @return the data with NAs replaced with values from the template
+#' @export
 
+replace_nas_with_template <- function(template, data){
 
   corrected <- data
   for(i in 1:length(data)){
