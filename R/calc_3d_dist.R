@@ -1,3 +1,12 @@
+#' calculate 3d distance
+#'
+#' A helper function for 3d distance
+#' @param point0 A point x y z
+#' @param point1 A point x y z
+#'
+#' @return The 3d distance from 0 to 1
+#' @export
+
 calc_3d_dist <- function(point0, point1){
   dist = c()
   for(i in 1:nrow(point1)){
