@@ -71,6 +71,15 @@ align_to_template <- function(template, data, num_aligned){
     lapply(x, setNames, n))
 }
 
+#' a second modified version of the kabsch algorithm to work on a subset of a matrix.
+#'
+#' @param pm a matrix
+#' @param qm a matrix
+#' @param om a third matrix
+#'
+#' @return a transposed om
+#' @export
+
 modified_kabsch2 <- function(pm, qm, om) {
   pm_dims <- dim(pm)
   if (!all(dim(qm) == pm_dims)) {
