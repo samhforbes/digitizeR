@@ -155,6 +155,17 @@ modified_kabsch2 <- function(pm, qm, om) {
   return(out_data)
 }
 
+#' Align a partial dataset to the template for each cap size
+#'
+#' This is used for a partial set of alignments if needed.
+#'
+#' @param template The template dataset
+#' @param data the data output of select_caps_by_npoints
+#' @param num_aligned the number of points to use in the alignment
+#'
+#' @return the listed dataset aligned to the template in each cap size
+#' @export
+
 align_to_template2 <- function(template, data, num_aligned){
   if(ncol(data[[1]][[2]]) > 3){
     normalised <- lapply(data, function(x)
