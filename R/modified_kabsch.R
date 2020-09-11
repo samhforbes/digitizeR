@@ -1,3 +1,14 @@
+#' modified version of the kabsch algorithm
+#'
+#' adapted to allow application of the matrix to a third dataset. Adapted from the kabsch function used in this package, original site listed there.
+#'
+#' @param pm a matrix
+#' @param qm a matrix
+#' @param om a third matrix
+#'
+#' @return om transposed.
+#' @export
+
 modified_kabsch <- function(pm, qm, om) {
   pm_dims <- dim(pm)
   if (!all(dim(qm) == pm_dims)) {
