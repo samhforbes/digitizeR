@@ -128,6 +128,12 @@ replace_nas_with_template <- function(template, data){
   return(corrected)
 }
 
+#' Calculate participant numbers
+#'
+#' @param data the data set
+#' @return the number of participants in the dataset
+#' @export
+
 calc_participant_numbers <- function(data){
   a <- 0
   for(i in 1:length(data)){
@@ -136,31 +142,17 @@ calc_participant_numbers <- function(data){
   return(a)
 }
 
-rezero_template_ind <- function(template){
-  data <- template
-  if(length(data) == 0) next
-  for(i in 1:length(data)){
-
-    #inbuilt sanity check
-    for(j in 1:nrow(data[[i]])){
-      if(data[[i]]$y[j] > (data[[i]]$y[2] + 1.5)){
-        data[[i]]$y[j] <- (data[[i]]$y[2] + 1.5)
-      }
-      if(data[[i]]$y[j] < (data[[i]]$y[3] - 1.5)){
-        data[[i]]$y[j] <- (data[[i]]$y[3] - 1.5)
-      }
-      if(data[[i]]$x[j] < (data[[i]]$x[5] - 1)){
-        data[[i]]$x[j] <- (data[[i]]$x[5] - 1)
-      }
-      if(data[[i]]$z[j] < (data[[i]]$z[4] + 0.5)){
-        data[[i]]$z[j] <- (data[[i]]$z[4] + 0.5)
-      }
-    }
-  }
-  return(data)
-}
-
-#iterative replacement
+#' iterative replacement
+#'
+#' Iteratively replaces with nas until the end when replaced by template.
+#' Reduced by integer until below 5, when it is .5
+#' @param template the template dataset
+#' @param aligned_data the data after alignment
+#' @param original_data the original dataset
+#' @param npoints_n_cap the number of points in the cap.
+#'
+#' @return Data aligned to the template in an iterative fashion
+#' @export
 iterative_replacement <- function(template, aligned_data, original_data, npoints_in_cap, max_threshold){
   n <- calc_participant_numbers(aligned_data)
   ntotal <- n * npoints_in_cap
