@@ -78,7 +78,15 @@ calc_dist_and_replace_template <- function(template, data, max){
   return(corrected)
 }
 
-
+#' calculate the 3d distance and replace with NAs when outside the specified distance
+#'
+#' @param template the templates to align to
+#' @param aligned_data the data post-alignment
+#' @param original_data the data before alignment
+#' @param max the maximum distance
+#'
+#' @return Aligned data with NAs replacing the points that are out of bounds
+#' @export
 calc_dist_and_replace_na <- function(template, aligned_data, original_data, max){
   #calculate distances from a template prespecified
   #template <- list()
