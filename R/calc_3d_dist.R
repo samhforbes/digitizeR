@@ -23,43 +23,16 @@ calc_3d_dist <- function(point0, point1){
   return(dist)
 }
 
-calc_dist_and_replace <- function(template_index, data, max){
-  #calculate distances from a template index
-  template <- list()
-  for(i in 1:length(template_index)){
-    ind <- as.numeric(template_index[[i]])
-
-    template[[i]] <- data[[i]][[ind]]
-  }
-
-  fulldist <- data
-  for(i in 1:length(fulldist)){
-    for(j in 1:length(fulldist[[i]])){
-      fulldist[[i]][[j]] <- calc_3d_dist(template[[i]], fulldist[[i]][[j]])
-    }
-  }
-
-  # and remove bad points
-  corrected <- data
-  for(i in 1:length(fulldist)){
-    for(j in 1:length(fulldist[[i]])){
-      for(k in 1:length(fulldist[[i]][[j]]))
-        if(fulldist[[i]][[j]][k] > max){
-          corrected[[i]][[j]][k,] <- template[[i]][k,]
-        }
-    }
-  }
-  return(corrected)
-}
+#' Calculate the 3d distance and replace points outside with the template
+#'
+#' @param template the template data to replace with
+#' @param data the data to replace
+#' @param max the maximum distance
+#'
+#' @return data where bad points are replaced with the template
+#' @export
 
 calc_dist_and_replace_template <- function(template, data, max){
-  #calculate distances from a template prespecified
-  #template <- list()
-  #for(i in 1:length(template_index)){
-  #  ind <- as.numeric(template_index[[i]])
-  #
-  #  template[[i]] <- data[[i]][[ind]]
-  #}
 
   fulldist <- data
   for(i in 1:length(fulldist)){
