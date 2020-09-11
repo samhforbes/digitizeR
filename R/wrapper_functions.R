@@ -130,3 +130,18 @@ count_nested_aligned_caps <- function(nested_data, original_data, max, points){
   }
   return(new_distance)
 }
+
+#' rezero caps
+#'
+#' @param data the data set
+#' @return the data with each cap rezeroed so that CZ is at 0
+#' @export
+
+rezero_caps <- function(data){
+  data2 <- data
+  for(i in 1:length(data2)){
+   if(length(data2[[i]]) == 0) next
+    rezero_template_ind(data2[[i]])
+  }
+  return(data2)
+}

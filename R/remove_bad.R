@@ -145,6 +145,14 @@ select_nested_caps_by_npoints <- function(data, npoints){
   return(correct)
 }
 
+#' Adjust points but with NAs instead of last row.
+#'
+#' @param data The dataset
+#' @param npoints The correct number of points in the cap
+#'
+#' @return the dataset with the final number of points
+#' @export
+
 adjust_points2 <- function(data, npoints){
   correct <- data
   for(i in 1:length(correct)){

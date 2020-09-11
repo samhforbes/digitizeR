@@ -107,3 +107,35 @@ rezero_template <- function(template){
   }
   return(data)
 }
+
+#' rezero and sanity check templates
+#'
+#' Contains extra sanity checks that are more conservative than rezero_template
+#'
+#' @param template the template dataset
+#'
+#' @return templates such that the CZ is at 0, and wide points are moved in
+#' @export
+rezero_template_ind <- function(template){
+  data <- template
+  if(length(data) == 0) next
+  for(i in 1:length(data)){
+
+    #inbuilt sanity check
+    for(j in 1:nrow(data[[i]])){
+      if(data[[i]]$y[j] > (data[[i]]$y[2] + 1.5)){
+        data[[i]]$y[j] <- (data[[i]]$y[2] + 1.5)
+      }
+      if(data[[i]]$y[j] < (data[[i]]$y[3] - 1.5)){
+        data[[i]]$y[j] <- (data[[i]]$y[3] - 1.5)
+      }
+      if(data[[i]]$x[j] < (data[[i]]$x[5] - 1)){
+        data[[i]]$x[j] <- (data[[i]]$x[5] - 1)
+      }
+      if(data[[i]]$z[j] < (data[[i]]$z[4] + 0.5)){
+        data[[i]]$z[j] <- (data[[i]]$z[4] + 0.5)
+      }
+    }
+  }
+  return(data)
+}
