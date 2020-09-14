@@ -27,4 +27,5 @@ Data aligned to the template in an iterative fashion
 \description{
 Iteratively replaces with nas until the end when replaced by template.
 Reduced by integer until below 5, when it is .5
+This function is experimental.
 }

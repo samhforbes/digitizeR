@@ -18,5 +18,6 @@ The dataset with caps replaced with template caps when poor
 }
 \description{
 replaces by a whole cap rather than individual points.
-When the average distance for the cap goes beyond the max value, the whole cap is replaced
+When the average distance for the cap goes beyond the max value, the whole cap is replaced.
+This function is experimental.
 }
