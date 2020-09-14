@@ -146,6 +146,7 @@ calc_participant_numbers <- function(data){
 #'
 #' Iteratively replaces with nas until the end when replaced by template.
 #' Reduced by integer until below 5, when it is .5
+#' This function is experimental.
 #' @param template the template dataset
 #' @param aligned_data the data after alignment
 #' @param original_data the original dataset
@@ -201,7 +202,8 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
 #' Headwise replacement
 #'
 #' replaces by a whole cap rather than individual points.
-#' When the average distance for the cap goes beyond the max value, the whole cap is replaced
+#' When the average distance for the cap goes beyond the max value, the whole cap is replaced.
+#' This function is experimental.
 #'
 #' @param template the template dataset
 #' @param data the dataset to replace
@@ -231,4 +233,36 @@ headwise_replacement <- function(template, data, max){
   }
   cat(a)
   return(corrected)
+}
+
+#' three step replacement
+#'
+#' This function is Experimental. Replaces points greater than the acceptable distance 3 times and replaces with NA to realign and try again.
+#' At the end replaces with template data where outside of the required distance.
+#' @param template The template dataset to align to
+#' @param aligned_data the data in a preliminary aligned form
+#' @param original_data the data after selecting by npoints
+#' @param npoints The number of points in the cap (to align by)
+#' @param dist1 Numeric. The first distance to align at
+#' @param dist2 Numeric. The second distance to align at
+#' @param dist3 Numeric. The third distance to align at
+#' @return a dataset that has been realigned three times at different distances to replace hopefully no more than the needed number of points only.
+#' @export
+
+threestep_alignment <- function(template, aligned_data, original_data, npoints, dist1, dist2, dist3){
+  clean_data <- calc_dist_and_replace_na(template, aligned_data, original_data, dist1)
+  #re-align with NAs in
+  message('Removing at ', dist1)
+  aligned_data_2 <- align_to_template2(template, clean_data, npoints)
+  #aligned_data_3 <- replace_nas_with_template(templates3, aligned_data_2)
+  #try again
+  clean_data_2 <- calc_dist_and_replace_na(template, aligned_data_2, original_data, dist2)
+  message('Removing at ', dist2)
+  aligned_data_3 <- align_to_template2(template, clean_data_2, npoints)
+  #aligned_data_5 <- replace_nas_with_template(templates3, aligned_data_4)
+  #and final replacement
+  message('Removing at ', dist3)
+  clean_data_3 <- calc_dist_and_replace_template(template, aligned_data_3, dist3)
+
+  return(clean_data_3)
 }
