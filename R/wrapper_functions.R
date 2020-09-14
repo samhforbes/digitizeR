@@ -145,3 +145,38 @@ rezero_caps <- function(data){
   }
   return(data2)
 }
+
+#' prepare and make template
+#'
+#' A wrapper function to do the pre-alignment, distance checks, and template creation needed.
+#' This can be slow for a large dataset!
+#' @param original_data the original dataset after selecting by number of points
+#' @param permitted_dist the distance within which to allow alignment. If unacceptable try again
+#' @param npoints the number of points in the cap
+#' @return The final templates
+#' @export
+
+prepare_and_make_templates <- function(original_data, permitted_dist, npoints){
+  message('Aligning all nested caps... this may take a while! \n')
+  big_data <- align_all_caps_nested(original_data, npoints)
+  distances <- count_nested_aligned_caps(big_data, original_data, permitted_dist, npoints)
+  message('Finding best alignment... \n')
+  best <- find_greatest_alignment(distances)
+  values <- greatest_alignment(distances)
+
+  message('If any of these values are too low (or high), rerun with a better distance! \n')
+  for(i in length(values)){
+    print(values[[i]])
+  }
+
+  message('Creating templates...')
+  prelim_templates <- make_templates(best, original_data)
+  # Align all with all points to templates
+
+  aligned_data_allpoints <- align_to_template(prelim_templates, original_data, npoints)
+
+  templates2 <- make_full_templates(aligned_data_allpoints, best, distances, npoints)
+
+  message('done!')
+  return(templates2)
+}
