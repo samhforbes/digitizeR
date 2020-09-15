@@ -36,18 +36,17 @@ plot_one_participant <- function(data, index, part, flipped = T){
 #'
 #' @param template_index the results of find_greatest_alignment
 #' @param nested_data the resutls of align_all_caps_nested
-#'
+#' @param flipped logical, if true will diplay cap right way up
 #' @return a plot of the landmarks for each cap size
 #' @export
 
-plot_visual_alignment <- function(template_index, nested_data){
+plot_visual_alignment <- function(template_index, nested_data, flipped = T){
   #used to be plot_template_by_index
   new_data <- list()
   for(i in 1:length(template_index)){
     a <-as.numeric(template_index[[i]])
     new_data[[i]] <- data[[i]][[a]][[a]]
   }
-
 
   plotting_data <- new_data
   #n <- names(new_data)
@@ -63,6 +62,11 @@ plot_visual_alignment <- function(template_index, nested_data){
   true_data <- do.call(rbind, plotting_data)
   names(true_data)[c(1:3)] <- n
 
+  if(flipped == T){
+    a <- a %>%
+      mutate(z = -z)
+  }
+
   plot <- plot_ly(data = true_data, x = ~x, y = ~y, z= ~z, color = ~v) %>%
     add_markers()
   plot
@@ -74,13 +78,20 @@ plot_visual_alignment <- function(template_index, nested_data){
 #'
 #' @param template the tamplate dataset
 #' @param index the numerical index of which cap size to choose
+#' @param flipped logical, if true will diplay cap right way up
 #' @return a full plot
 #' @export
 
-plot_template <- function(template, index){
+plot_template <- function(template, index, flipped = T){
   a <- template[[index]]
 
   a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')
+
+  if(flipped == T){
+    a <- a %>%
+      mutate(z = -z)
+  }
+
   plot <- plot_ly(a, x = ~x, y = ~y, z = ~z, color = ~Points, colors = 'Set1') %>%
     add_markers()
 

@@ -4,12 +4,14 @@
 \alias{plot_template}
 \title{Plot a template from the template dataset to see how they look}
 \usage{
-plot_template(template, index)
+plot_template(template, index, flipped = T)
 }
 \arguments{
 \item{template}{the tamplate dataset}
 
 \item{index}{the numerical index of which cap size to choose}
+
+\item{flipped}{logical, if true will diplay cap right way up}
 }
 \value{
 a full plot

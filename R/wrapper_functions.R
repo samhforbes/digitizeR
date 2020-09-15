@@ -165,12 +165,12 @@ prepare_and_make_templates <- function(original_data, permitted_dist, npoints){
   values <- greatest_alignment(distances)
 
   message('If any of these values are too low (or high), rerun with a better distance! \n')
-  for(i in length(values)){
+  for(i in 1:length(values)){
     print(values[[i]])
   }
 
   message('Creating templates...')
-  prelim_templates <- make_templates(best, original_data)
+  prelim_templates <- make_partial_templates(best, original_data)
   # Align all with all points to templates
 
   aligned_data_allpoints <- align_to_template(prelim_templates, original_data, npoints)
