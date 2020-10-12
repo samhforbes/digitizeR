@@ -4,16 +4,33 @@
 \alias{read_in_caps}
 \title{read in caps}
 \usage{
-read_in_caps(digipath, pattern, capsize, type = c("NIHVWM", "Gates", "HWB"))
+read_in_caps(
+  digipath,
+  pattern,
+  capsize,
+  landmarks = c("nz", "ar", "al", "cz", "iz"),
+  num_source = 16,
+  num_detector = 32,
+  short = c(3, 11, 19, 27),
+  subchar = c(1, 12)
+)
 }
 \arguments{
-\item{digipath}{path to digitizations}
+\item{digipath}{path to digitizations as a string}
 
-\item{pattern}{a pattern in files passed to list.files}
+\item{pattern}{a pattern in files passed to list.files as a string}
 
-\item{capsize}{the path to the cap size document}
+\item{capsize}{the path to the cap size document as a string}
 
-\item{type}{to be adjusted for cap geometry}
+\item{landmarks}{the refpoints to be adjusted for cap geometry as a vector}
+
+\item{num_source}{numeric value of the number of sources}
+
+\item{num_detector}{numeric value of the number of detectors}
+
+\item{short}{a vector indicating the numeric value of short sources, if any}
+
+\item{subchar}{a vector indicating the characters from the ID to use, passed to substr}
 }
 \value{
 a list of digitizations in dataframe form

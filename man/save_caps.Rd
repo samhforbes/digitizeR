@@ -4,14 +4,12 @@
 \alias{save_caps}
 \title{Save caps to disk as digpts.txt}
 \usage{
-save_caps(data, path, type = c("NIHVWM", "Gates", "HWB"))
+save_caps(data, path)
 }
 \arguments{
 \item{data}{data to save}
 
 \item{path}{path to save the data}
-
-\item{type}{to save the data for a specific cap geometry.}
 }
 \value{
 Saved digpts.txt to the path in a folder for each participant, ready to use in AtlasViewerGUI

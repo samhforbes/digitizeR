@@ -11,7 +11,7 @@ plot_template(template, index, flipped = T)
 
 \item{index}{the numerical index of which cap size to choose}
 
-\item{flipped}{logical, if true will diplay cap right way up}
+\item{flipped}{logical, if true will display cap right way up}
 }
 \value{
 a full plot

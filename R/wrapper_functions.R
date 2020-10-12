@@ -16,6 +16,7 @@ select_caps_by_npoints <- function(data, npoints){
     }
     correct[[i]] <- correct[[i]][!is.na(correct[[i]])]
   }
+  class(correct) <- class(data)
   return(correct)
 }
 
@@ -157,6 +158,9 @@ rezero_caps <- function(data){
 #' @export
 
 prepare_and_make_templates <- function(original_data, permitted_dist, npoints){
+
+  attributes <- attr(original_data, 'digitization')
+
   message('Aligning all nested caps... this may take a while! \n')
   big_data <- align_all_caps_nested(original_data, npoints)
   distances <- count_nested_aligned_caps(big_data, original_data, permitted_dist, npoints)
@@ -178,5 +182,8 @@ prepare_and_make_templates <- function(original_data, permitted_dist, npoints){
   templates2 <- make_full_templates(aligned_data_allpoints, best, distances, npoints)
 
   message('done!')
+
+  class(templates2) <- c('digi_template', class(templates2))
+  attr(templates2, 'digi_templates') <- attributes
   return(templates2)
 }

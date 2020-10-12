@@ -132,10 +132,11 @@ rezero_template_ind <- function(template){
       if(data[[i]]$x[j] < (data[[i]]$x[5] - 1)){
         data[[i]]$x[j] <- (data[[i]]$x[5] - 1)
       }
-      if(data[[i]]$z[j] < (data[[i]]$z[4] + 0.5)){
-        data[[i]]$z[j] <- (data[[i]]$z[4] + 0.5)
+      if(data[[i]]$z[j] < (data[[i]]$z[4] - 1)){
+        data[[i]]$z[j] <- (data[[i]]$z[4] - 1)
       }
     }
   }
+  class(data) <- class(template)
   return(data)
 }

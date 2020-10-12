@@ -78,11 +78,15 @@ plot_visual_alignment <- function(template_index, nested_data, flipped = T){
 #'
 #' @param template the tamplate dataset
 #' @param index the numerical index of which cap size to choose
-#' @param flipped logical, if true will diplay cap right way up
+#' @param flipped logical, if true will display cap right way up
 #' @return a full plot
 #' @export
 
 plot_template <- function(template, index, flipped = T){
+
+  if('digi_template' %in% class(template) == F){
+    stop('This template is not of class digi_template. Make sure to re-run it')
+  }
   a <- template[[index]]
 
   a$Points <- ifelse(as.numeric(row.names(a))<6, 'Landmark', 'Cap')

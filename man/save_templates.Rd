@@ -4,7 +4,7 @@
 \alias{save_templates}
 \title{Save template output}
 \usage{
-save_templates(template, data, path, type = c("NIHVWM", "Gates", "HWB"))
+save_templates(template, data, path)
 }
 \arguments{
 \item{template}{list of template caps}
@@ -12,8 +12,6 @@ save_templates(template, data, path, type = c("NIHVWM", "Gates", "HWB"))
 \item{data}{the dataset aligned to the templates - for naming purposes only}
 
 \item{path}{the path to save the digpts.txt files}
-
-\item{type}{will need adjustment for a specific geometry.}
 }
 \value{
 a directory of folders named with the cap size, each of which contains digpts.txt
