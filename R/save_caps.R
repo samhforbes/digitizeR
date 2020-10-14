@@ -10,7 +10,7 @@
 save_caps <- function(data, path){
 
   cap_data <- attr(data, 'digitization')
-  landmarks = cap_data$Landmarks
+  landmarks = cap_data$Landmark
   num_source = cap_data$Sources
   num_detector = cap_data$Detector
   short = cap_data$Short
@@ -76,8 +76,8 @@ save_templates <- function(template, data, path){
     stop('This template is not of class digi_template. Make sure to re-run it')
   }
 
-  cap_data <- attr(data, 'digi_template')
-  landmarks = cap_data$Landmarks
+  cap_data <- attr(template, 'digi_template')
+  landmarks = cap_data$Landmark
   num_source = cap_data$Sources
   num_detector = cap_data$Detector
   short = cap_data$Short
@@ -108,8 +108,8 @@ save_templates <- function(template, data, path){
     cfiles3 <- cfiles2
   }
 
-  a <- as.character(c('nz:', 'ar:', 'al:', 'cz:', 'iz:', paste('s', 1:16, ':', sep =''),
-                      paste('d', 1:32, ':', sep = '')))
+  a <- as.character(c(landmarks, paste('s', 1:num_source, ':', sep =''),
+                      paste('d', 1:num_detector, ':', sep = '')))
 
   cfiles4 <- lapply(cfiles3, function(x) cbind(a, x))
 

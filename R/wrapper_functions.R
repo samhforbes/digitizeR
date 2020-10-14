@@ -72,7 +72,7 @@ align_all_caps_nested <- function(data, num_aligned){
       }
     }
   }
-  class(correct) <- class(data)
+  class(land_norm2) <- class(data)
   return(land_norm2)
 }
 

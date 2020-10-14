@@ -56,7 +56,7 @@ calc_dist_and_replace_template <- function(template, data, max){
       }
     }
   }
-  cat(a)
+  cat(a, '\n')
   class(corrected) <- class(data)
   return(corrected)
 }
@@ -101,8 +101,8 @@ calc_dist_and_replace_na <- function(template, aligned_data, original_data, max)
       }
     }
   }
-  cat(a)
-  class(corrected) <- class(data)
+  cat(a, '\n')
+  class(corrected) <- class(aligned_data)
   return(corrected)
 }
 
@@ -255,18 +255,20 @@ headwise_replacement <- function(template, data, max){
 #' @export
 
 threestep_alignment <- function(template, aligned_data, original_data, npoints, dist1, dist2, dist3){
+  message('Removing at ', dist1, '\n')
   clean_data <- calc_dist_and_replace_na(template, aligned_data, original_data, dist1)
   #re-align with NAs in
-  message('Removing at ', dist1)
+
   aligned_data_2 <- align_to_template2(template, clean_data, npoints)
   #aligned_data_3 <- replace_nas_with_template(templates3, aligned_data_2)
   #try again
+  message('Removing at ', dist2, '\n')
   clean_data_2 <- calc_dist_and_replace_na(template, aligned_data_2, original_data, dist2)
-  message('Removing at ', dist2)
+
   aligned_data_3 <- align_to_template2(template, clean_data_2, npoints)
   #aligned_data_5 <- replace_nas_with_template(templates3, aligned_data_4)
   #and final replacement
-  message('Removing at ', dist3)
+  message('Removing at ', dist3, '\n')
   clean_data_3 <- calc_dist_and_replace_template(template, aligned_data_3, dist3)
 
   class(clean_data_3) <- class(aligned_data)
