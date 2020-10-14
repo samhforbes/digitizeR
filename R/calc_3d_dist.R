@@ -57,6 +57,7 @@ calc_dist_and_replace_template <- function(template, data, max){
     }
   }
   cat(a)
+  class(corrected) <- class(data)
   return(corrected)
 }
 
@@ -101,6 +102,7 @@ calc_dist_and_replace_na <- function(template, aligned_data, original_data, max)
     }
   }
   cat(a)
+  class(corrected) <- class(data)
   return(corrected)
 }
 
@@ -125,6 +127,7 @@ replace_nas_with_template <- function(template, data){
         }
     }
   }
+  class(corrected) <- class(data)
   return(corrected)
 }
 
@@ -196,6 +199,7 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
     }
   }
   cat(a, 'points replaced \n')
+  class(fulldist) <- class(aligned_data)
   return(fulldist)
 }
 
@@ -232,6 +236,7 @@ headwise_replacement <- function(template, data, max){
     }
   }
   cat(a)
+  class(corrected) <- class(data)
   return(corrected)
 }
 
@@ -264,5 +269,6 @@ threestep_alignment <- function(template, aligned_data, original_data, npoints, 
   message('Removing at ', dist3)
   clean_data_3 <- calc_dist_and_replace_template(template, aligned_data_3, dist3)
 
+  class(clean_data_3) <- class(aligned_data)
   return(clean_data_3)
 }

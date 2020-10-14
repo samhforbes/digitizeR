@@ -38,6 +38,7 @@ select_caps_without_npoints <- function(data, npoints){
     }
     correct[[i]] <- correct[[i]][!is.na(correct[[i]])]
   }
+  class(correct) <- class(data)
   return(correct)
 }
 
@@ -71,6 +72,7 @@ align_all_caps_nested <- function(data, num_aligned){
       }
     }
   }
+  class(correct) <- class(data)
   return(land_norm2)
 }
 

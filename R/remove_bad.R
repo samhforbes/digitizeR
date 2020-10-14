@@ -53,6 +53,7 @@ adjust_points <- function(data, npoints){
       }
     }
   }
+  class(correct) <- class(data)
   return(correct)
 }
 
@@ -172,5 +173,6 @@ adjust_points2 <- function(data, npoints){
       }
     }
   }
+  class(correct) <- class(data)
   return(correct)
 }

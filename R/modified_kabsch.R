@@ -69,6 +69,9 @@ align_to_template <- function(template, data, num_aligned){
 
   normalised <- lapply(normalised, function(x)
     lapply(x, setNames, n))
+
+  class(normalised) <- class(data)
+  return(normalised)
 }
 
 #' a second modified version of the kabsch algorithm to work on a subset of a matrix.
@@ -189,4 +192,7 @@ align_to_template2 <- function(template, data, num_aligned){
 
   normalised <- lapply(normalised, function(x)
     lapply(x, setNames, n))
+
+  class(normalised) <- class(data)
+  return(normalised)
 }
