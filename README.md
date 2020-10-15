@@ -83,6 +83,22 @@ save_templates(template = templates,
 There are also plotting functions to visualise the locations of the
 points.
 
-There are further functions to then apply all this methodolody to
-individual templates to produce cleaned caps at an individual level. See
-the documentation for details.
+There are further functions *which are experimental* to then apply all
+this methodolody to individual templates to produce cleaned caps at an
+individual level.
+
+First caps would be aligned with the templates for a rough pass
+
+``` r
+aligned_data_final <- align_to_template(templates, sub_data, 37)
+```
+
+We can then try one of the individual cap correction
+methods
+
+``` r
+clean_data3 <- threestep_alignment(templates2, aligned_data_final, sub_data, 37, 12, 10, 7)
+```
+
+There are also functions to use different methods, and to save the caps
+after they are output.
