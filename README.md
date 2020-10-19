@@ -45,10 +45,18 @@ library(digitizeR)
 <!-- end list -->
 
 ``` r
-data <- read_in_caps(digipath = 'sam/all_digi',
-             pattern = '.txt',
-             capsize = 'sam/my_capsize_document.csv',
-             type = 'Gates')
+#read in caps
+capsize <- 'Capsize_Y1.csv'
+digipath <- 'Year1_digitisations'
+pattern <- 'DIGIFULL'
+
+data  <- read_in_caps(digipath, 
+                      pattern, 
+                      capsize, 
+                      num_source = 12, 
+                      num_detector = 20,
+                      short = NULL, 
+                      subchar = c(1,9))
 ```
 
   - Select only those with the right number of points (37 in this case)
