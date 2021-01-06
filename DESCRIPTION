@@ -1,5 +1,5 @@
 Package: digitizeR
-Title: fNIRS digitization cleanup and template creator.
+Title: fNIRS digitization cleanup and template creator
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Samuel",
@@ -10,6 +10,7 @@ Authors@R:
 Description: When attempting image reconstructed fNIRS, the functions included here allow for the cleanup and template digitization creation from original polhemus digitizations.
 License: MIT
 Encoding: UTF-8
+Date/Publication: 2021
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
