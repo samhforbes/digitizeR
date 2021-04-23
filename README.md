@@ -101,22 +101,23 @@ First caps would be aligned with the templates for a rough pass
 aligned_data_final <- align_to_template(templates, sub_data, 37)
 ```
 
-We can then try one of the individual cap correction
-methods
+We can then try one of the individual cap correction methods
 
 ``` r
 clean_data3 <- threestep_alignment(templates2, aligned_data_final, sub_data, 37, 12, 10, 7)
 ```
 
 There are also functions to use different methods, and to save the caps
-after they are output. We can test these methods by pulling one point
-out of each of two templates and pretending they are caps, and when
-running the threestep alignment we should see that those points *and
-only those points* are corrected, which we do see\!
+after they are output.
+
+We can test these methods by pulling one point out of each of two
+templates and pretending they are caps, and when running the threestep
+alignment we should see that those points *and only those points* are
+corrected, which we do see\!
 
 Note the blue NZ point is pulled forward, and this is then corrected in
 the second image while all other points remain the same.
 
-![Note the nose point pulled
-forward](../Digitization/plots/1_warped.png) ![And this is now corrected
-but other points remain the same](../Digitization/plots/1_repared.png)
+![Note the nose point pulled forward](man/figures/README-1_warped.png)
+![And this is now corrected but other points remain the
+same](man/figures/README-1_repared.png)
