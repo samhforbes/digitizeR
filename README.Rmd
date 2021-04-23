@@ -85,7 +85,7 @@ save_templates(template = templates,
 
 There are also plotting functions to visualise the locations of the points.
 
-There are further functions *which are experimental* to then apply all this methodolody to individual templates to produce cleaned caps at an individual level. 
+There are further functions *which are experimental* to then apply all this methodology to individual templates to produce cleaned caps at an individual level. 
 
 First caps would be aligned with the templates for a rough pass
 
