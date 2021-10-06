@@ -98,12 +98,11 @@ save_templates <- function(template, data, path){
   if(!is.null(short)){
     message('We are assuming 4 short sources. If you have more or less this may not work!')
     d <- num_source + 5
-    cfiles3 <- lapply(cfiles2, function(y)
-      lapply(y, function(x) rbind(x[1:short[1] + d - 1,],empty,
-                                  x[short[1] + d:short[2] + d - 1,], empty,
-                                  x[short[2] + d:short[3] + d - 1,], empty,
-                                  x[short[3] + d:short[4] + d - 1,], empty,
-                                  x[short[4] + d:nrow(x),])))
+    cfiles3 <- lapply(cfiles2,  function(x) rbind(x[1:(short[1] + d - 1),],empty,
+                                                  x[(short[1] + d):(short[2] + d - 1),], empty,
+                                                  x[(short[2] + d):(short[3] + d - 1),], empty,
+                                                  x[(short[3] + d):(short[4] + d - 1),], empty,
+                                                  x[(short[4] + d):nrow(x),]))
   }else{
     cfiles3 <- cfiles2
   }
