@@ -71,6 +71,7 @@ align_to_template <- function(template, data, num_aligned){
     lapply(x, setNames, n))
 
   class(normalised) <- class(data)
+  attr(normalised, 'digitization') <- attr(data, 'digitization')
   return(normalised)
 }
 

@@ -32,16 +32,16 @@ save_caps <- function(data, path){
     message('We are assuming 4 short sources. If you have more or less this may not work!')
     d <- num_source + 5
     cfiles3 <- lapply(cfiles2, function(y)
-      lapply(y, function(x) rbind(x[1:short[1] + d - 1,],empty,
-                                  x[short[1] + d:short[2] + d - 1,], empty,
-                                  x[short[2] + d:short[3] + d - 1,], empty,
-                                  x[short[3] + d:short[4] + d - 1,], empty,
-                                  x[short[4] + d:nrow(x),])))
+      lapply(y, function(x) rbind(x[1:(short[1] + d - 1),],empty,
+                                  x[(short[1] + d):(short[2] + d - 2),], empty,
+                                  x[(short[2] + d-1):(short[3] + d -3),], empty,
+                                  x[(short[3] + d-2):(short[4] + d -4),], empty,
+                                  x[(short[4] + d-3):nrow(x),])))
   }else{
     cfiles3 <- cfiles2
   }
 
-  a <- as.character(c(landmarks, paste('s', 1:num_source, ':', sep =''),
+  a <- as.character(c(paste(landmarks, ':', sep = ''), paste('s', 1:num_source, ':', sep =''),
                       paste('d', 1:num_detector, ':', sep = '')))
 
   cfiles4 <- lapply(cfiles3, function(x)
@@ -99,15 +99,15 @@ save_templates <- function(template, data, path){
     message('We are assuming 4 short sources. If you have more or less this may not work!')
     d <- num_source + 5
     cfiles3 <- lapply(cfiles2,  function(x) rbind(x[1:(short[1] + d - 1),],empty,
-                                                  x[(short[1] + d):(short[2] + d - 1),], empty,
-                                                  x[(short[2] + d):(short[3] + d - 1),], empty,
-                                                  x[(short[3] + d):(short[4] + d - 1),], empty,
-                                                  x[(short[4] + d):nrow(x),]))
+                                                  x[(short[1] + d):(short[2] + d - 2),], empty,
+                                                  x[(short[2] + d-1):(short[3] + d -3),], empty,
+                                                  x[(short[3] + d-2):(short[4] + d -4),], empty,
+                                                  x[(short[4] + d-3):nrow(x),]))
   }else{
     cfiles3 <- cfiles2
   }
 
-  a <- as.character(c(landmarks, paste('s', 1:num_source, ':', sep =''),
+  a <- as.character(c(paste(landmarks, ':', sep = ''), paste('s', 1:num_source, ':', sep =''),
                       paste('d', 1:num_detector, ':', sep = '')))
 
   cfiles4 <- lapply(cfiles3, function(x) cbind(a, x))

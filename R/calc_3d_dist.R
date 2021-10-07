@@ -154,6 +154,7 @@ calc_participant_numbers <- function(data){
 #' @param aligned_data the data after alignment
 #' @param original_data the original dataset
 #' @param npoints_n_cap the number of points in the cap.
+#' @param max_threshold the max proportion of points you are willing to replace
 #'
 #' @return Data aligned to the template in an iterative fashion
 #' @export
@@ -167,7 +168,7 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
   a <- 0
     for(max in int){
       if(a/ntotal >= max_threshold) next
-      cat('it\'s at this level:', max, '\n')
+      cat('it\'s at this level:', max,': ',a/ntotal, ' <=', max_threshold, '\n')
       a <- 0
       #calc dist and replace NA
       for(i in 1:length(fulldist)){
@@ -185,7 +186,7 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
 
         }
       }
-      fulldist <- align_to_template2(templates3, corrected, npoints_in_cap)
+      fulldist <- align_to_template2(template, corrected, npoints_in_cap)
     }
 #max loop
   for(i in 1:length(fulldist)){
@@ -200,6 +201,7 @@ iterative_replacement <- function(template, aligned_data, original_data, npoints
   }
   cat(a, 'points replaced \n')
   class(fulldist) <- class(aligned_data)
+  attr(fulldist, 'digitization') <- attr(aligned_data, 'digitization')
   return(fulldist)
 }
 
@@ -237,6 +239,7 @@ headwise_replacement <- function(template, data, max){
   }
   cat(a)
   class(corrected) <- class(data)
+  attr(corrected, 'digitization') <- attr(data, 'digitization')
   return(corrected)
 }
 
@@ -272,5 +275,6 @@ threestep_alignment <- function(template, aligned_data, original_data, npoints, 
   clean_data_3 <- calc_dist_and_replace_template(template, aligned_data_3, dist3)
 
   class(clean_data_3) <- class(aligned_data)
+  attr(clean_data_3, 'digitization') <- attr(aligned_data, 'digitization')
   return(clean_data_3)
 }
